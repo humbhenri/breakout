@@ -15,10 +15,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     paddle.cpp \
-    graphicsscene.cpp
+    graphicsscene.cpp \
+    ball.cpp
 
 HEADERS  += mainwindow.h \
     paddle.h \
-    graphicsscene.h
+    graphicsscene.h \
+    ball.h
 
 FORMS    += mainwindow.ui

@@ -1,20 +1,22 @@
-#ifndef PADDLE_H
-#define PADDLE_H
+#ifndef BALL_H
+#define BALL_H
+
 #include <QGraphicsItem>
 
-class Paddle: public QGraphicsItem
+class Ball: public QGraphicsItem
 {
 public:
-    Paddle();
+    Ball();
     QRectF boundingRect() const;
     QPainterPath shape() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget);
-
-protected:
+    void advance(int phase);
 
 private:
     int width;
+    int dx;
+    int dy;
 };
 
-#endif // PADDLE_H
+#endif // BALL_H

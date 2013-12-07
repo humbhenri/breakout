@@ -4,6 +4,7 @@
 #include <QGraphicsView>
 #include <QGraphicsSceneMouseEvent>
 #include "paddle.h"
+#include "ball.h"
 
 #define SCENE_WIDTH 800
 #define SCENE_HEIGHT 600
@@ -17,7 +18,9 @@ protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 private:
     Paddle *paddle;
+    Ball *ball;
     void movePaddle(QGraphicsSceneMouseEvent *event);
+
 };
 
 #endif // GRAPHICSSCENE_H

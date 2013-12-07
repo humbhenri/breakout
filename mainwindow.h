@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QTimer>
 #include "paddle.h"
 
 namespace Ui {
@@ -17,11 +18,12 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
-protected:
+    QTimer *timer;
+private slots:
+    void debug();
 
 
 };

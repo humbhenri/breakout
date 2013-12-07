@@ -8,11 +8,14 @@ GraphicsScene::GraphicsScene(QGraphicsView *view)
     setItemIndexMethod(QGraphicsScene::NoIndex);
     paddle = new Paddle;
     addItem(paddle);
+    ball = new Ball;
+    addItem(ball);
+    ball->setPos(sceneRect().center());
 }
 
 void GraphicsScene::movePaddle(QGraphicsSceneMouseEvent *event)
 {
-    qreal paddleX = qMin(event->scenePos().x(), sceneRect().width() - paddle->width() + ADJUST);
+    qreal paddleX = qMin(event->scenePos().x(), sceneRect().width() - paddle->boundingRect().width() + ADJUST);
     paddle->setPos(paddleX, paddle->y());
 }
 
