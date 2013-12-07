@@ -1,41 +1,41 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QEvent>
+#include <QMouseEvent>
 
+#define SCENE_WIDTH 800
+#define SCENE_HEIGHT 600
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);    
-    ui->centralWidget->setMouseTracking(true);
-    ui->centralWidget->installEventFilter(this);
-    setCursor(Qt::BlankCursor);
+    ui->setupUi(this);        
+    ui->centralWidget->setCursor(Qt::BlankCursor);
     setWindowTitle("Breakout 1.0");
+    scene = new QGraphicsScene(ui->graphicsView);
+    scene->setSceneRect(0, 0, SCENE_WIDTH, SCENE_HEIGHT);
+    scene->setItemIndexMethod(QGraphicsScene::NoIndex);
+    ui->graphicsView->setScene(scene);
+    ui->graphicsView->setMouseTracking(true);
+    ui->graphicsView->installEventFilter(this);
+    setFixedSize(SCENE_WIDTH+75, SCENE_HEIGHT+100);
+    createPaddle();
 }
 
-void MainWindow::paintEvent(QPaintEvent *event)
+void MainWindow::createPaddle()
 {
-    Q_UNUSED(event)
-    QPainter painter(this);
-
-    // paddle
-    painter.setBrush(Qt::black);
-    int paddleHeight = 0.04 * height();
-    int paddleWidth = 0.15 * width();
-    int y = height() - paddleHeight;
-    QPoint mouse = mapFromGlobal(QCursor::pos());
-    int x = mouse.x();
-    painter.drawRect(x, y, paddleWidth, paddleHeight);
-
+    paddle = new Paddle;
+    scene->addItem(paddle);
 }
 
-bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
-    Q_UNUSED(obj)
+bool MainWindow::eventFilter(QObject *, QEvent *event){
     if (event->type() == QEvent::MouseMove) {
-        update();
+        scene->advance();
     }
     return false;
 }
+
 
 MainWindow::~MainWindow()
 {

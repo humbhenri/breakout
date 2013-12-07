@@ -2,9 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QPainter>
-#include <QDebug>
-#include <QPaintEvent>
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include "paddle.h"
 
 namespace Ui {
 class MainWindow;
@@ -20,9 +20,12 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QGraphicsScene *scene;
+    Paddle *paddle;
+    void createPaddle();
 protected:
-    void paintEvent(QPaintEvent *event);
     bool eventFilter(QObject *, QEvent *);
+
 };
 
 #endif // MAINWINDOW_H
