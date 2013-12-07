@@ -21,10 +21,8 @@ public:
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
-    Paddle *paddle;
-    void createPaddle();
 protected:
-    bool eventFilter(QObject *, QEvent *);
+
 
 };
 

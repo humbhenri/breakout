@@ -4,27 +4,33 @@
 #include <QCursor>
 
 Paddle::Paddle()
-    :width(100)
+    :_width(100)
 {
 }
 
 QRectF Paddle::boundingRect() const
 {
 
-    return QRectF(0, this->scene()->sceneRect().height(), width, 20);
+    return QRectF(0, this->scene()->sceneRect().height(), width(), 20);
 }
 
+QPainterPath Paddle::shape() const
+{
+    QPainterPath path;
+    path.addRect(boundingRect());
+    return path;
+}
 void Paddle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
            QWidget *widget)
 {
+    Q_UNUSED(option)
+    Q_UNUSED(widget)
     painter->setBrush(Qt::black);
     painter->drawRect(boundingRect());
 }
 
-void Paddle::advance(int step)
+int Paddle::width() const
 {
-    if (!step)
-        return;
-
-    setPos(QCursor::pos().x(), y());
+    return _width;
 }
+

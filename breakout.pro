@@ -14,9 +14,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    paddle.cpp
+    paddle.cpp \
+    graphicsscene.cpp
 
 HEADERS  += mainwindow.h \
-    paddle.h
+    paddle.h \
+    graphicsscene.h
 
 FORMS    += mainwindow.ui
