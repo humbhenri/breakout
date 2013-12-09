@@ -36,7 +36,7 @@ void Ball::advance(int phase)
     if (collidingItems().size() > 0)
         dy = -dy;
 
-    int adjust =20;
+    int adjust = 20;
     QPointF pos = scenePos();
     if (pos.x() > scene()->sceneRect().right() + adjust)
         dx = -dx;
