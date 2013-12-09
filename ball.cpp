@@ -25,7 +25,9 @@ void Ball::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     Q_UNUSED(option)
     Q_UNUSED(widget)
     painter->setBrush(Qt::blue);
+    painter->setPen(Qt::blue);
     painter->drawEllipse(-width, -width, width, width);
+    painter->setBrush(Qt::red);
 }
 
 void Ball::advance(int phase)
@@ -33,8 +35,23 @@ void Ball::advance(int phase)
     if (!phase)
         return;
 
-    if (collidingItems().size() > 0)
-        dy = -dy;
+    if (collidingItems().size() > 0) {
+        QGraphicsItem *item = collidingItems().at(0);
+        QRectF itemRect = item->sceneBoundingRect();
+        if (itemRect.contains(mapToScene(QPointF(0, width)))) {
+            // hit bottom
+            dy = -dy;
+        } else if (itemRect.contains(mapToScene(QPointF(0, -width)))) {
+            // hit top
+            dy = -dy;
+        } else if (itemRect.contains(mapToScene(QPointF(-width, 0)))) {
+            // hit left
+            dx = -dx;
+        } else if (itemRect.contains(mapToScene(QPointF(width, 0)))) {
+            // hit right;
+            dx = -dx;
+        }
+    }
 
     int adjust = 20;
     QPointF pos = scenePos();
