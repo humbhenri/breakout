@@ -2,6 +2,9 @@
 #include <QGraphicsScene>
 #include <QPainter>
 #include <QDebug>
+#include <QCoreApplication>
+#include <QDir>
+#include "sound.h"
 
 Ball::Ball()
     :width(15), dx(3), dy(3)
@@ -34,7 +37,13 @@ void Ball::advance(int phase)
 {
     if (!phase)
         return;
+    handleItemCollisions();
+    handleBorderCollision();
+    moveBy(dx, dy);
+}
 
+void Ball::handleItemCollisions()
+{
     if (collidingItems().size() > 0) {
         QGraphicsItem *item = collidingItems().at(0);
         QRectF itemRect = item->sceneBoundingRect();
@@ -51,17 +60,31 @@ void Ball::advance(int phase)
             // hit right;
             dx = -dx;
         }
+        playHitSound();
     }
+}
 
+void Ball::handleBorderCollision()
+{
     int adjust = 20;
     QPointF pos = scenePos();
-    if (pos.x() > scene()->sceneRect().right() + adjust)
-        dx = -dx;
-    if (pos.y() < scene()->sceneRect().top())
-        dy = -dy;
-    if (pos.x() < scene()->sceneRect().left())
-        dx = -dx;
 
-    setPos(x() + dx, y() + dy);
+    if (pos.x() > scene()->sceneRect().right() + adjust) {
+        dx = -dx;
+        playHitSound();
+    }
+    if (pos.y() < scene()->sceneRect().top()) {
+        dy = -dy;
+        playHitSound();
+    }
+    if (pos.x() < scene()->sceneRect().left()) {
+        dx = -dx;
+        playHitSound();
+    }
+}
+
+void Ball::playHitSound()
+{
+    Sound(QCoreApplication::applicationDirPath() + "/ballhit.wav").play();
 }
 

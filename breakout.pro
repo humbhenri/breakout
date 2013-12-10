@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -17,12 +17,16 @@ SOURCES += main.cpp\
     paddle.cpp \
     graphicsscene.cpp \
     ball.cpp \
-    block.cpp
+    block.cpp \
+    sound.cpp
 
 HEADERS  += mainwindow.h \
     paddle.h \
     graphicsscene.h \
     ball.h \
-    block.h
+    block.h \
+    sound.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES +=

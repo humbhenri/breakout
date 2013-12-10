@@ -12,11 +12,13 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget);
     void advance(int phase);
-
 private:
     int width;
     int dx;
     int dy;
+    void handleItemCollisions();
+    void handleBorderCollision();
+    void playHitSound();
 };
 
 #endif // BALL_H
