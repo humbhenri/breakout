@@ -1,8 +1,12 @@
 #include "block.h"
+#include "sound.h"
 #include <QPainter>
+#include <QCoreApplication>
+#include <QGraphicsScene>
+#include <QTimer>
 
-Block::Block()
-    :width(50), height(20)
+Block::Block(QObject *parent)
+    :QObject(parent), width(50), height(20)
 {
 }
 
@@ -30,4 +34,14 @@ void Block::advance(int phase)
 {
     if (!phase)
         return;
+    if (collidingItems().size() > 0) {
+        Sound(QCoreApplication::applicationDirPath() + "/boom.wav").play();
+        QTimer::singleShot(100, this, SLOT(destroyMe()));
+    }
+}
+
+void Block::destroyMe()
+{
+    this->deleteLater();
+    scene()->removeItem(this);
 }
